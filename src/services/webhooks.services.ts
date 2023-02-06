@@ -1,14 +1,19 @@
 const whatsappResponse = (query: any) => {
   const qObject: any = query;
+  let hChallenge: string = '';
+  let isToken: boolean = false;
+  for (const [key, value] of Object.entries(qObject)) {
+    console.log(`${key.trim()}: ${value}`);
+    if (key.trim() === 'hub.challenge') {
+      hChallenge = value as string;
+    }
+    if (key.trim() === 'hub.verify_token' && value === process.env.META_TOKEN) {
+      isToken = true;
+    }
+  }
 
-  Object.keys(qObject).map((k) => {
-    const newObj = (qObject[k.toString().trim()] = qObject[k]);
-    delete qObject[k];
-    return newObj;
-  });
-
-  if (qObject['hub.verify_token'] === process.env.META_TOKEN) {
-    return qObject['hub.challenge'];
+  if (hChallenge.length > 0 && isToken) {
+    return hChallenge;
   } else throw new Error('TOKEN_ERRROR');
 };
 
