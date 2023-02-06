@@ -16,6 +16,8 @@ const notifyWhatsappMessage = async (req: Request, res: Response) => {
   try {
     // const resp = whatsappResponse(req.query);
     console.log(req.body);
+    console.log(req?.body?.entry);
+    req?.body?.entry[0].map((entry: any) => console.log(entry));
     res.send('Response');
   } catch (e) {
     res.send('ERRRRRRRRRRRRROR');
