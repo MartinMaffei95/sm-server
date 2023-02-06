@@ -1,7 +1,9 @@
 import { Request, Response, Router } from 'express';
-import { getMessages } from '../controllers/webhook';
+import { getMessages, notifyWhatsappMessage } from '../controllers/webhook';
 const router = Router();
 
 router.get('/whatsapp', getMessages);
+
+router.post('/whatsapp', notifyWhatsappMessage);
 
 export { router };

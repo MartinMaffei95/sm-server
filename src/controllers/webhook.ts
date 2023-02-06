@@ -12,4 +12,14 @@ const getMessages = async (req: Request, res: Response) => {
   }
 };
 
-export { getMessages };
+const notifyWhatsappMessage = async (req: Request, res: Response) => {
+  try {
+    // const resp = whatsappResponse(req.query);
+    console.log(req);
+    res.send('Response');
+  } catch (e) {
+    res.send('ERRRRRRRRRRRRROR');
+  }
+};
+
+export { getMessages, notifyWhatsappMessage };
