@@ -8,7 +8,6 @@ const getMessages = async (req: Request, res: Response) => {
     const resp = whatsappResponse(req.query);
     res.send(resp);
   } catch (e) {
-    // handleHttp(res, 'ERROR_GET_TRANSACTIONS', e);
     res.send('ERRRRRRRRRRRRROR');
   }
 };
