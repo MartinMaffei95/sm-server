@@ -1,11 +1,25 @@
 import 'dotenv/config';
-import express from 'express';
+import express, { NextFunction } from 'express';
+import { createServer } from 'http';
 import cors from 'cors';
 import { router } from './routes';
+import { Server } from 'socket.io';
+import { RequestIO } from './interfaces/RequestIO';
 
 const app = express();
 
-const PORT = process.env.PORT || 4000;
+/* ## using socket IO */
+const httpServer = createServer(app);
+export const io = new Server(httpServer, { cors: { origin: '*' } });
+
+// ## Connection IO event
+io.on('connection', (socket) => {
+  // ...
+  console.log('conexxixon');
+});
+
+const PORT = process.env.PORT || 5000;
+
 app.use(
   cors({
     origin: `*`,
@@ -15,8 +29,9 @@ app.use(
   })
 );
 app.use(express.json());
+
 app.use(router);
 
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   console.log(`Server listen on port: ${PORT}`);
 });
