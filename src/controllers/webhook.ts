@@ -15,7 +15,7 @@ const getMessages = async (req: Request, res: Response) => {
 
 const notifyWhatsappMessage = async (req: RequestIO, res: Response) => {
   try {
-    req?.io?.emit('new-message', { content: 'te contesto del server' });
+    req?.io?.emit('new-message', { content: req.body });
     console.log('new-message');
     return res.send('io OK');
   } catch (e) {
