@@ -1,3 +1,7 @@
+import {
+  WhatsappMessageStatus,
+  WhatsappMessage,
+} from './../interfaces/WhatsappMessage.interface';
 import * as dotenv from 'dotenv';
 dotenv.config();
 import { Request, response, Response } from 'express';
@@ -15,8 +19,14 @@ const getMessages = async (req: Request, res: Response) => {
 
 const notifyWhatsappMessage = async (req: RequestIO, res: Response) => {
   try {
-    req?.io?.emit('new-message', { content: req.body });
-    console.log('new-message');
+    if (req.body.content.entry[0].changes[0].value.statuses) {
+      req?.io?.emit('message-status-as-change', { content: req.body });
+      console.log('message-status-as-change');
+    } else if (req.body.content.entry[0].changes[0].value.messages) {
+      req?.io?.emit('new-message', { content: req.body });
+      console.log('new-message');
+    }
+
     return res.send('io OK');
   } catch (e) {
     res.send('ERRRRRRRRRRRRROR');
